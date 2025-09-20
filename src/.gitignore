@@ -1,0 +1,30 @@
+# Dependencies
+/node_modules
+
+# Build directory
+/build
+
+# Local environment variables
+.env.local
+.env.*.local
+
+# Logs
+npm-debug.log*
+yarn-error.log*
+yarn-debug.log*
+
+# Test reports
+/coverage
+
+# Editor directories and files
+.idea
+.vscode
+*.suo
+*.ntvs*
+*.njsproj
+*.sln
+*.sw?
+
+# Operating System Files
+.DS_Store
+Thumbs.db

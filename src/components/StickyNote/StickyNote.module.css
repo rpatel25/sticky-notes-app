@@ -1,0 +1,70 @@
+.note {
+  position: absolute;
+  top: 0;
+  left: 0;
+  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
+  border-radius: 4px;
+  display: flex;
+  flex-direction: column;
+  transition: box-shadow 0.2s ease;
+  cursor: grab;
+}
+
+.note:active {
+  cursor: grabbing;
+  box-shadow: 0 8px 16px rgba(0, 0, 0, 0.3);
+}
+
+.header {
+  height: 28px;
+  background-color: rgba(0, 0, 0, 0.08);
+  border-bottom: 1px solid rgba(0, 0, 0, 0.1);
+  padding: 0 8px;
+  flex-shrink: 0;
+  display: flex;
+  align-items: center;
+  justify-content: flex-end;
+}
+
+.colors {
+  display: flex;
+  gap: 6px;
+}
+
+.colorSwatch {
+  width: 16px;
+  height: 16px;
+  border-radius: 50%;
+  border: 1px solid rgba(0, 0, 0, 0.2);
+  cursor: pointer;
+  padding: 0;
+  transition: transform 0.1s ease;
+}
+
+.colorSwatch:hover {
+  transform: scale(1.1);
+  border-color: rgba(0, 0, 0, 0.5);
+}
+
+.textarea {
+  flex-grow: 1;
+  background: transparent;
+  border: none;
+  resize: none;
+  padding: 10px;
+  font-family: 'Helvetica Neue', sans-serif;
+  font-size: 16px;
+  outline: none;
+  cursor: text;
+}
+
+.resizer {
+  position: absolute;
+  width: 12px;
+  height: 12px;
+  right: 0;
+  bottom: 0;
+  cursor: nwse-resize;
+  border-right: 2px solid rgba(0, 0, 0, 0.4);
+  border-bottom: 2px solid rgba(0, 0, 0, 0.4);
+}
