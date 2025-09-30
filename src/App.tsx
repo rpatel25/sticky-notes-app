@@ -3,13 +3,14 @@ import StickyNote from './components/StickyNote';
 import TrashZone from './components/TrashZone';
 import { useNotes } from './hooks/useNotes';
 import { useDragAndDrop } from './hooks/useDragAndDrop';
+import { useNoteCreator } from './hooks/useNoteCreator';
 
 const App: React.FC = () => {
   const noteRefs = useRef<Map<string, HTMLDivElement | null>>(new Map());
 
   const {
     notes,
-    addNote,
+    createNote,
     deleteNote,
     updateNotePosition,
     updateNoteSize,
@@ -28,9 +29,14 @@ const App: React.FC = () => {
     }
   );
 
+  const { creationBox, handleCanvasMouseDown } = useNoteCreator(createNote);
+
   return (
-    <div className="app-canvas" onDoubleClick={addNote}>
-      <h1 className="title">Double click anywhere to add a new note</h1>
+    <div className="app-canvas" onMouseDown={handleCanvasMouseDown}>
+      {/* Change from double-click to click-drag-release with minimum required size for visibility purpose */}
+      <h1 className="title">
+        Click and drag mouse to add a new note (minimum - 100x50)
+      </h1>
       {notes.map((note) => (
         <StickyNote
           key={note.id}
@@ -48,6 +54,18 @@ const App: React.FC = () => {
           onBringToFront={bringToFront}
         />
       ))}
+      {/* Conditionally render the preview box */}
+      {creationBox && (
+        <div
+          className="creation-preview-box"
+          style={{
+            left: `${creationBox.x}px`,
+            top: `${creationBox.y}px`,
+            width: `${creationBox.width}px`,
+            height: `${creationBox.height}px`,
+          }}
+        />
+      )}
       <TrashZone isDragging={isDragging} onDragOver={setIsOverTrash} />
     </div>
   );

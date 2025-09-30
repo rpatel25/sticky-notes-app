@@ -13,19 +13,21 @@ export const useNotes = () => {
     localStorage.setItem('sticky-notes-app', JSON.stringify(notes));
   }, [notes]);
 
-  const addNote = (e: React.MouseEvent<HTMLDivElement>) => {
-    if (e.target !== e.currentTarget) return;
-    const maxZIndex = Math.max(0, ...notes.map((n) => n.zIndex));
-    const newNote: Note = {
-      id: `note_${Date.now()}`,
-      position: { x: e.clientX - 100, y: e.clientY - 50 },
-      size: { width: 200, height: 200 },
-      text: 'New Note',
-      color: COLORS[0],
-      zIndex: maxZIndex + 1,
-    };
-    setNotes((prev) => [...prev, newNote]);
-  };
+  const createNote = useCallback(
+    (rect: { x: number; y: number; width: number; height: number }) => {
+      const maxZIndex = Math.max(0, ...notes.map((n) => n.zIndex));
+      const newNote: Note = {
+        id: `note_${Date.now()}`,
+        position: { x: rect.x, y: rect.y },
+        size: { width: rect.width, height: rect.height },
+        text: 'New Note',
+        color: COLORS[0],
+        zIndex: maxZIndex + 1,
+      };
+      setNotes((prev) => [...prev, newNote]);
+    },
+    [notes]
+  );
 
   const deleteNote = useCallback((noteId: string) => {
     setNotes((prev) => prev.filter((n) => n.id !== noteId));
@@ -77,7 +79,7 @@ export const useNotes = () => {
   return {
     notes,
     setNotes,
-    addNote,
+    createNote,
     deleteNote,
     updateNotePosition,
     updateNoteSize,
